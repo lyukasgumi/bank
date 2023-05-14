@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>Edit Client</h2>
+
+<mat-dialog-content class="mat-typography">
+	<form [formGroup]="editForm" class="form container">
+		<mat-form-field class="form-element">
+			<mat-label>Név</mat-label>
+			<input
+				matInput
+				type="text"
+				placeholder="Ex. Kiss Tamás"
+				[errorStateMatcher]="matcher"
+				formControlName="nev"
+			/>
+			<mat-error *ngIf="myForm.nev.errors?.required">
+				Név megadása<strong>kötelező</strong>
+			</mat-error>
+		</mat-form-field>
+		<br />
+		<mat-form-field class="form-element">
+			<mat-label>Tanszék</mat-label>
+			<input
+				matInput
+				type="text"
+				placeholder="Ex. AIT"
+				[errorStateMatcher]="matcher"
+				formControlName="tanszek"
+			/>
+			<mat-error *ngIf="myForm.nev.errors?.required">
+				Tanszék megadása<strong>kötelező</strong>
+			</mat-error>
+		</mat-form-field>
+	</form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+	<button mat-button mat-dialog-close cdkFocusInitial>Cancel</button>
+	<button
+		mat-button
+		[mat-dialog-close]="true"
+		(click)="submitForm()"
+		[disabled]="!editForm.valid"
+	>
+		Confirm
+	</button>
+</mat-dialog-actions>

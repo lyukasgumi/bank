@@ -1,0 +1,62 @@
+<h2 mat-dialog-title>Hallgató módosítása</h2>
+
+<mat-dialog-content class="mat-typography">
+	<form [formGroup]="editForm" class="form container">
+		<mat-form-field class="form-element">
+			<mat-label>Név</mat-label>
+			<input
+				matInput
+				type="text"
+				placeholder="Ex. Kiss Tamás"
+				[errorStateMatcher]="matcher"
+				formControlName="nev"
+			/>
+			<mat-error *ngIf="myForm.nev.errors?.required">
+				Név megadása<strong>kötelező</strong>
+			</mat-error>
+		</mat-form-field>
+		<br />
+		<mat-form-field class="form-element">
+			<mat-label>Tankör</mat-label>
+			<input
+				matInput
+				type="text"
+				placeholder="Ex. AIT"
+				[errorStateMatcher]="matcher"
+				formControlName="tankor"
+			/>
+			<mat-error *ngIf="myForm.tankor.errors?.required">
+				Tankör megadása<strong>kötelező</strong>
+			</mat-error>
+		</mat-form-field>
+	</form>
+	<div class="form container" *ngFor="let targyjegyel of Targyakjegyel">
+		<div>Tárgy: {{ targyjegyel.targy.nev }}</div>
+		<mat-form-field class="form-element">
+			<mat-label>Érdemjegy:</mat-label>
+			<mat-select
+				[(value)]="targyjegyel.jegy"
+				[errorStateMatcher]="matcher"
+			>
+				<mat-option
+					*ngFor="let opcio of jegyopciok"
+					[value]="opcio.value"
+				>
+					{{ opcio.viewValue }}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+	</div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+	<button mat-button mat-dialog-close cdkFocusInitial>Cancel</button>
+	<button
+		mat-button
+		[mat-dialog-close]="true"
+		(click)="submitForm()"
+		[disabled]="!editForm.valid"
+	>
+		Confirm
+	</button>
+</mat-dialog-actions>

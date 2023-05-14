@@ -1,0 +1,41 @@
+<div class="center">
+	<p *ngIf="Hallgatok.length <= 0" class="no-data text-center">
+		Nincsenek hallgatók a rendszerben!
+		<mat-spinner></mat-spinner>
+	</p>
+</div>
+
+<div class="center">
+	<mat-accordion
+		*ngFor="let hallgato of Hallgatok; let i = index"
+		class="accordion-spacing"
+	>
+		<mat-expansion-panel class="extension-panel-shown">
+			<mat-expansion-panel-header class="extension-panel-header-shown">
+				<mat-panel-title>
+					{{ hallgato.nev }}
+				</mat-panel-title>
+				<mat-panel-description>
+					{{ hallgato.tankor }}
+				</mat-panel-description>
+			</mat-expansion-panel-header>
+			<div *ngIf="Targyak.length > 0">Felvett tárgyak:</div>
+			<div *ngFor="let te of hallgato.targyakjegyel">
+				Tárgy: {{ te.targy.nev }}, Tárgykód: {{ te.targy.targykod }},
+				Érdemjegy: {{ te.jegy }}
+			</div>
+			<button mat-button (click)="editHallgato(hallgato)">
+				<mat-icon>edit</mat-icon>
+			</button>
+			<button mat-button (click)="deleteHallgato(hallgato, i)">
+				<mat-icon>delete</mat-icon>
+			</button>
+		</mat-expansion-panel>
+	</mat-accordion>
+</div>
+
+<div class="button-container">
+	<button mat-fab color="primary" (click)="createHallgato()">
+		<mat-icon>add</mat-icon>
+	</button>
+</div>

@@ -1,0 +1,86 @@
+<h2 mat-dialog-title>Hallgató felvitele</h2>
+
+<mat-dialog-content class="mat-typography">
+	<form [formGroup]="createForm" class="form container">
+		<mat-form-field class="form-element">
+			<mat-label>Név</mat-label>
+			<input
+				matInput
+				type="text"
+				placeholder="Ex. Kiss Tamás"
+				[errorStateMatcher]="matcher"
+				formControlName="nev"
+			/>
+			<mat-error *ngIf="myForm.nev.errors?.required">
+				Név megadása<strong>kötelező</strong>
+			</mat-error>
+		</mat-form-field>
+		<br />
+		<mat-form-field class="form-element">
+			<mat-label>Tankör</mat-label>
+			<input
+				matInput
+				type="text"
+				placeholder="Ex. GTI1"
+				[errorStateMatcher]="matcher"
+				formControlName="tankor"
+			/>
+			<mat-error *ngIf="myForm.tankor.errors?.required">
+				Tanszék megadása<strong>kötelező</strong>
+			</mat-error>
+		</mat-form-field>
+	</form>
+	<form [formGroup]="targyForm" class="form container">
+		<mat-form-field class="form-element">
+			<mat-label>Tárgy:</mat-label>
+			<mat-select
+				formControlName="targypicked"
+				[(value)]="selectedtargy"
+				[errorStateMatcher]="matcher"
+			>
+				<mat-option>None</mat-option>
+				<mat-option
+					[value]="targy"
+					*ngFor="let targy of Targyak; let i = index"
+				>
+					{{ targy.nev }} , {{ targy.targykod }}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<mat-form-field class="form-element">
+			<mat-label>Érdemjegy:</mat-label>
+			<mat-select
+				formControlName="jegypicked"
+				[(value)]="selectedjegy"
+				[errorStateMatcher]="matcher"
+			>
+				<mat-option
+					*ngFor="let opcio of jegyopciok"
+					[value]="opcio.value"
+				>
+					{{ opcio.viewValue }}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+		<button mat-button (click)="addTargyjegyel(selectedtargy._id)">
+			<mat-icon>add</mat-icon>
+		</button>
+	</form>
+	<mat-label *ng-If="Targyakjegyel.length > 0">Érdemjegy:</mat-label>
+	<div *ngFor="let targyjegy of Targyakjegyel">
+		{{ targyjegy.targy.nev }} - {{ targyjegy.jegy }}
+	</div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+	<button mat-button mat-dialog-close cdkFocusInitial>Cancel</button>
+	<button
+		mat-button
+		[mat-dialog-close]="true"
+		(click)="submitForm()"
+		[disabled]="!createForm.valid"
+	>
+		Confirm
+	</button>
+</mat-dialog-actions>

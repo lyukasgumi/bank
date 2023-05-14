@@ -1,0 +1,43 @@
+<p *ngIf="Targyak.length <= 0" class="no-data text-center">
+	Még nincs tárgy felvéve.
+</p>
+<div class="button-container">
+	<button mat-fab color="primary" (click)="createTargy()">
+		<mat-icon>add</mat-icon>
+	</button>
+</div>
+<div class="card-container">
+	<div fxLayout="row wrap" fxLayoutAlign="space-evenly center">
+		<mat-card
+			class="rentable-card"
+			*ngFor="let targy of Targyak; let i = index"
+		>
+			<mat-card-header>
+				<div
+					*ngIf="targy.tipus != 'OTHER'"
+					mat-card-avatar
+					class="targy-header-image {{ targy.tipus }}"
+				></div>
+				<mat-card-title>{{ targy.nev }}</mat-card-title>
+				<mat-card-subtitle>{{ targy.targykod }}</mat-card-subtitle>
+			</mat-card-header>
+			<mat-card-content>
+				<p>
+					Kredit:
+					{{ targy.kredit }}
+				</p>
+				<p>Type: [ {{ targy.tipus }} ]</p>
+			</mat-card-content>
+			<mat-card-actions>
+				<button mat-button (click)="editTargy(targy, i)">Edit</button>
+				<button
+					mat-button
+					color="accent"
+					(click)="removeTargy(targy, i)"
+				>
+					Delete
+				</button>
+			</mat-card-actions>
+		</mat-card>
+	</div>
+</div>

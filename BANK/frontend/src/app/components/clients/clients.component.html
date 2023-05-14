@@ -1,0 +1,47 @@
+<div class="center">
+	<p *ngIf="Clients.length <= 0" class="no-data text-center">
+		No clients yet!
+	</p>
+</div>
+
+<div class="center">
+	<mat-accordion
+		*ngFor="let client of Clients; let i = index"
+		class="accordion-spacing"
+	>
+		<mat-expansion-panel class="extension-panel-shown">
+			<mat-expansion-panel-header class="extension-panel-header-shown">
+				<mat-panel-title>
+					{{ client.name }}
+				</mat-panel-title>
+				<mat-panel-description>
+					<mat-label>Client number:</mat-label>
+					{{ client.cID }}<br />
+				</mat-panel-description>
+			</mat-expansion-panel-header>
+
+			<mat-label>Phone no.</mat-label>
+			{{ client.phone }}<br />
+			<mat-label>Identification no.</mat-label>
+			{{ client.IDnum }}<br />
+			<div *ngIf="client.Accounts">
+				Accounts:
+				<div *ngFor="let acc of client.Accounts">
+					Account number: {{ acc.accountNumber }} Balance:
+					{{ acc.balance }}
+				</div>
+			</div>
+			<button mat-button (click)="editClient(client)">
+				<mat-icon>edit</mat-icon>
+			</button>
+			<button mat-button (click)="deleteClient(client, i)">
+				<mat-icon>delete</mat-icon>
+			</button>
+		</mat-expansion-panel>
+	</mat-accordion>
+	<div class="button-container">
+		<button mat-fab color="primary" (click)="createClient()">
+			<mat-icon>add</mat-icon>
+		</button>
+	</div>
+</div>

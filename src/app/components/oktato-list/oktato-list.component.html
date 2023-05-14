@@ -1,0 +1,40 @@
+<p *ngIf="Oktatok.length <= 0" class="no-data text-center">
+	There are no clients added yet!
+	<mat-spinner></mat-spinner>
+</p>
+
+<div class="center">
+	<mat-accordion
+		*ngFor="let oktato of Oktatok; let i = index"
+		class="accordion-spacing"
+	>
+		<mat-expansion-panel class="extension-panel-shown">
+			<mat-expansion-panel-header class="extension-panel-header-shown">
+				<mat-panel-title>
+					{{ oktato.nev }}
+				</mat-panel-title>
+				<mat-panel-description>
+					{{ oktato.tanszek }}
+				</mat-panel-description>
+			</mat-expansion-panel-header>
+			<div *ngIf="oktato.oktatotttargyak.length > 0">
+				Oktatott tárgyak:
+			</div>
+			<div *ngFor="let targy of oktato.oktatotttargyak">
+				- {{ targy.nev }} - {{ targy.targykod }}
+			</div>
+			<button mat-button (click)="editOktato(oktato)">
+				<mat-icon>edit</mat-icon>
+			</button>
+			<button mat-button (click)="deleteOktato(oktato)">
+				<mat-icon>delete</mat-icon>
+			</button>
+		</mat-expansion-panel>
+	</mat-accordion>
+</div>
+
+<div class="button-container">
+	<button mat-fab color="primary" (click)="createOktatok()">
+		<mat-icon>add</mat-icon>
+	</button>
+</div>

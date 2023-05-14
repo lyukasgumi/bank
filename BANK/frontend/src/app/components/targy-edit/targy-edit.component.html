@@ -1,0 +1,93 @@
+<h2 mat-dialog-title>Tárgy hozzáadása</h2>
+
+<mat-dialog-content class="mat-typography">
+	<form [formGroup]="createForm" class="form container">
+		<mat-form-field class="form-element">
+			<mat-label>Tárgy név:</mat-label>
+			<input
+				matInput
+				type="text"
+				placeholder="Ex. Matematika Analízis"
+				[errorStateMatcher]="matcher"
+				formControlName="nev"
+			/>
+			<mat-error *ngIf="myForm.nev.errors?.required">
+				Tárgynév megadása<strong>kötelező</strong>
+			</mat-error>
+		</mat-form-field>
+		<br />
+		<mat-form-field class="form-element">
+			<mat-label>Tárgy kód:</mat-label>
+			<input
+				matInput
+				type="text"
+				placeholder="Ex. GW-2143524"
+				[errorStateMatcher]="matcher"
+				formControlName="targykod"
+			/>
+			<mat-error *ngIf="myForm.targykod.errors?.required">
+				Tárgykód megadása<strong>kötelező</strong>
+			</mat-error>
+		</mat-form-field>
+		<br />
+		<mat-form-field class="form-element">
+			<mat-label>Kredit:</mat-label>
+			<input
+				matInput
+				type="text"
+				placeholder="Ex. 5"
+				[errorStateMatcher]="matcher"
+				formControlName="kredit"
+			/>
+			<mat-error *ngIf="myForm.kredit.errors?.pattern">
+				A kreditnek számnak kell lennie.
+			</mat-error>
+			<mat-error *ngIf="myForm.kredit.errors?.required">
+				Kredit megadása<strong>kötelező</strong>
+			</mat-error>
+		</mat-form-field>
+
+		<mat-form-field class="form-element">
+			<mat-label>Tipus:</mat-label>
+			<mat-select formControlName="tipus" [errorStateMatcher]="matcher">
+				<mat-option *ngFor="let tipus of tipusok" [value]="tipus.value">
+					{{ tipus.viewValue }}
+				</mat-option>
+			</mat-select>
+			<mat-error *ngIf="myForm.tipus.errors?.required">
+				Tipust meg kell adni.
+			</mat-error>
+		</mat-form-field>
+
+		<mat-form-field class="form-element">
+			<mat-label>Oktató:</mat-label>
+			<mat-select [(value)]="selected">
+				<mat-option [value]="oktato" *ngFor="let oktato of Oktatok">
+					{{ oktato.nev }}
+				</mat-option>
+			</mat-select>
+			<mat-error *ngIf="myForm.tipus.errors?.required">
+				Type is <strong>required</strong>
+			</mat-error>
+		</mat-form-field>
+		<div *ngIf="selected">
+			{{ selected.nev }} adatai: <br />
+			Tanszék: {{ selected.tanszek }} <br />
+			<div *ngFor="let targy of selected.oktatotttargyak">
+				- {{ targy.nev }} - {{ targy.targykod }}
+			</div>
+		</div>
+	</form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+	<button mat-button mat-dialog-close cdkFocusInitial>Cancel</button>
+	<button
+		mat-button
+		[mat-dialog-close]="true"
+		(click)="submitForm()"
+		[disabled]="!createForm.valid"
+	>
+		Comfirm
+	</button>
+</mat-dialog-actions>
